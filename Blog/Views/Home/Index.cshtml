@@ -1,0 +1,31 @@
+﻿
+@{
+    @using System.Collections.Generic;
+    @using Blog.Data;
+    @using Blog.Methods;
+    @using System.Data.SqlTypes;
+    ViewData["Title"] = "Домашняя страница";
+    List<Article> ArticleList = Model.Get();
+    @Model;
+}
+<div class="text-center">
+    @foreach (Article article in ArticleList)
+    {
+        <div>
+            @{
+                CategoryMethods a = new CategoryMethods(Model._configuration);
+                List<Category> categorylist = a.Get();
+                @foreach (Category category in categorylist)
+                {
+                    if (article.CategoryId == category.Id)
+                    {
+                        <h4>@category.Name</h4><br />
+                    }
+                }
+            }
+            <h4>@article.Name</h4><br />
+            <p>@article.Description</p>
+        </div>
+    }
+
+</div>
